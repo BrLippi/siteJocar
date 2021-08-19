@@ -28,8 +28,9 @@ public class Test {
     public void Search() {        // metodo de busca
 
         String buscar = "Óleo do motor";
+        buscar =buscar.toLowerCase();
 
-        driver.findElement(By.id("ctl00_ctl00_mstContentMain_mstCabecalho_CabBusca1_txtDescricao")).sendKeys(buscar.toLowerCase());
+        driver.findElement(By.id("ctl00_ctl00_mstContentMain_mstCabecalho_CabBusca1_txtDescricao")).sendKeys(buscar);
         driver.findElement(By.id("btnBuscarCabBusca")).click();
         //String result = driver.findElement(By.className("productName")).getText();
 
@@ -38,10 +39,20 @@ public class Test {
         System.out.println("Quantidade de itens encontrados:" + results.size());
         System.out.println("Itens encontrados:");
 
-        for (int i = 0; i < results.size(); i++) {
-            System.out.println(i + ":" + results.get(i).getText());   //lista a quantidade encontrada
+        boolean resultado = false;
 
+        for (int i = 0; i < results.size(); i++) {
+            System.out.println(i + ":" + results.get(i).getText());//lista a quantidade encontrada
+            String valorResult = results.get(i).getText().toLowerCase();
+
+            if(valorResult.contains(buscar)){  //equalsignorecase para comparar quando um valor tem q ser exatamente e contains para verificar se tem
+                resultado = true;
+            }
         }
+
+        Assert.assertTrue(resultado);
+
+
     }
 
 
